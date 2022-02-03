@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Todo from "./Todo";
 import TodoList from "./TodoList";
 
 export default function Todos() {
-  const [todos, setTodo] = useState([]);
+  const todos = useSelector(store => store.todoReducer.todos);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasPrev, setHasPrev] = useState(false);
   const [hasNext, setHasNext] = useState(false);
@@ -31,21 +32,6 @@ export default function Todos() {
     }
   }, [indexOfLastTodo, indexOfFirstTodo,todos.length,currentTodos.length]);
 
-  const addNewTodo = (todoItem) => {
-    let todoList = [...todos, todoItem];
-    setTodo(todoList);
-  };
-
-  const removeTodo = (id) => {
-    let todoList = todos.filter((todo) => todo.id !== id);
-    setTodo(todoList);
-  };
-
-  const addComment = (id, comment) => {
-    const todoItem = todos.find((todo) => todo.id === id);
-    todoItem.comments.push(comment);
-  };
-
   const prevClickHandle = () => {
     setCurrentPage((prev) => prev - 1);
   };
@@ -56,11 +42,9 @@ export default function Todos() {
   return (
     <div>
       <h4>Todos</h4>
-      <Todo addNewTodo={addNewTodo} />
+      <Todo />
       <TodoList
         todos={currentTodos}
-        removeTodo={removeTodo}
-        addComment={addComment}
       />
       <button disabled={hasPrev ? "" : "disabled"} onClick={prevClickHandle}>
         Prev 5

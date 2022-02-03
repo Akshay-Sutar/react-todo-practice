@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Todo(props) {
   const [todo, setTodo] = useState("");
+  const dispatch = useDispatch();
 
   const clickHandler = (e) => {
     if (todo.length === 0) {
@@ -9,7 +11,7 @@ export default function Todo(props) {
     }
 
     const todoItem = { title: todo, id: Date.now(), comments: [] };
-    props.addNewTodo(todoItem);
+    dispatch({type:'ADD_TODO',payload:todoItem});
     setTodo("");
   };
   return (

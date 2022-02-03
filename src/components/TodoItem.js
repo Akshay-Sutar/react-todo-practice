@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
-export default function TodoItem({ todo, removeTodo, addComment }) {
+export default function TodoItem({ todo }) {
   const [showAddComment, setShowAddComment] = useState(false);
   const commentReff = useRef("");
+  const dispatch = useDispatch();
 
   const completeTodo = (id) => {
-    removeTodo(id);
+    dispatch({type:'REMOVE_TODO',payload:id});
   };
 
   const showCommentHandler = () => {
@@ -14,7 +16,7 @@ export default function TodoItem({ todo, removeTodo, addComment }) {
 
   const addCommentHandler = (id) => {
     const comment = commentReff.current.value;
-    addComment(id, comment);
+    dispatch({type:'ADD_COMMENT',payload:{id:id, comment:comment}});
     commentReff.current.value = "";
     setShowAddComment((prevState) => !prevState);
   };
