@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-export default function Todo(props) {
+export default function Todo() {
   const [todo, setTodo] = useState("");
   const dispatch = useDispatch();
 
